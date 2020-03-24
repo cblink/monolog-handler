@@ -1,0 +1,22 @@
+{
+    "name": "cblink/monolog-handler",
+    "description": "monolog aliyun handler",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nick",
+            "email": "Nick@httpd.cc"
+        }
+    ],
+    "require": {
+        "php": ">=7.2",
+        "wppd/aliyun-log-php-sdk": "^1.0",
+        "monolog/monolog": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Cblink\\Monolog\\Handler\\": "src/"
+        }
+    }
+}
