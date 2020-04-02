@@ -11,12 +11,18 @@
     ],
     "require": {
         "php": ">=7.2",
-        "wppd/aliyun-log-php-sdk": "^1.0",
-        "monolog/monolog": "^2.0"
+        "cblink/aliyun-log-php-sdk": "^1.0",
+        "monolog/monolog": "^2.0",
+        "phpunit/phpunit": "~7.0|~8.0|~9.0"
     },
     "autoload": {
         "psr-4": {
             "Cblink\\Monolog\\Handler\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Cblink\\Monolog\\Handler\\Tests\\": "tests/"
         }
     }
 }

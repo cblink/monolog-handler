@@ -47,9 +47,25 @@ class AliyunLogHandler extends AbstractProcessingHandler
      */
     public function write(array $record): void
     {
+        if (is_string($record['context'])){
+            $record['context'] = [$record['context']];
+        }
+
+        // 处理多维数组
+        $data = [];
+        foreach ($record['context'] as $key => $value){
+            if (is_array($value)){
+                $value = json_encode($value, JSON_UNESCAPED_UNICODE);
+            }
+            if (is_object($value)){
+                $value = serialize($value);
+            }
+            $data[$key] = $value;
+        }
+
         $logItem = new \Aliyun_Log_Models_LogItem();
         $logItem->setTime(time());
-        $logItem->setContents($record['context']);
+        $logItem->setContents($data);
 
         $this->client->putLogs(new \Aliyun_Log_Models_PutLogsRequest(
             $this->projectName,
