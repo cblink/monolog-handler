@@ -1,6 +1,7 @@
 <?php
 namespace Cblink\Monolog\Handler;
 
+use Closure;
 use Monolog\Handler\AbstractProcessingHandler;
 use Monolog\Logger;
 
@@ -56,9 +57,6 @@ class AliyunLogHandler extends AbstractProcessingHandler
         foreach ($record['context'] as $key => $value){
             if (is_array($value)){
                 $value = json_encode($value, JSON_UNESCAPED_UNICODE);
-            }
-            if (is_object($value)){
-                $value = serialize($value);
             }
             $data[$key] = $value;
         }
