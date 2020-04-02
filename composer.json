@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": ">=7.2",
-        "wppd/aliyun-log-php-sdk": "^1.0",
+        "cblink/aliyun-log-php-sdk": "^1.0",
         "monolog/monolog": "^2.0"
     },
     "autoload": {
