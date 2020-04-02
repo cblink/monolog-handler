@@ -1,5 +1,8 @@
 ## monolog handler
 
+#### 安装
+`composer require cblink/monolog-handler`
+
 #### 支持的Handler列表
 
 - 阿里云log
