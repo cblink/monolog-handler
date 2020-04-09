@@ -2,6 +2,7 @@
 namespace Cblink\Monolog\Handler\Tests;
 
 use Cblink\Monolog\Handler\AliyunLogHandler;
+use Monolog\Logger;
 use Monolog\Test\TestCase;
 
 class AliyunHandlerTest extends TestCase
@@ -17,12 +18,8 @@ class AliyunHandlerTest extends TestCase
         // 日志名称
         $logName = "handler-test";
 
-        $handler = new AliyunLogHandler(
-            $accessId,
-            $accessKey,
-            $endpoint,
-            $projectName,
-            $logName
+        $logger = new Logger('test',
+            [new AliyunLogHandler($accessId, $accessKey, $endpoint, $projectName, $logName)],
         );
 
         $data = [
@@ -39,12 +36,9 @@ class AliyunHandlerTest extends TestCase
             ]
         ];
 
-        $log = [
-            'message' => 'test message',
-            'context' => $data,
-        ];
+        $logger->info('test message', $data);
 
-        $handler->write($log);
+
         $this->assertTrue(true);
     }
 }

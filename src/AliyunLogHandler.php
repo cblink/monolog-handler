@@ -48,22 +48,11 @@ class AliyunLogHandler extends AbstractProcessingHandler
      */
     public function write(array $record): void
     {
-        if (is_string($record['context'])){
-            $record['context'] = [$record['context']];
-        }
-
-        // 处理多维数组
-        $data = [];
-        foreach ($record['context'] as $key => $value){
-            if (is_array($value)){
-                $value = json_encode($value, JSON_UNESCAPED_UNICODE);
-            }
-            $data[$key] = $value;
-        }
+        $record = $this->getRecord($record);
 
         $logItem = new \Aliyun_Log_Models_LogItem();
         $logItem->setTime(time());
-        $logItem->setContents($data);
+        $logItem->setContents($record['context']);
 
         $this->client->putLogs(new \Aliyun_Log_Models_PutLogsRequest(
             $this->projectName,
@@ -72,5 +61,31 @@ class AliyunLogHandler extends AbstractProcessingHandler
             "",
             [$logItem]
         ));
+    }
+
+    /**
+     * @param array $record
+     * @return array
+     */
+    public function getRecord(array $record)
+    {
+        if (is_string($record['context']) || is_int($record['context']) || is_bool($record['context'])){
+            $record['context'] = [$record['context']];
+        }
+
+        // 如果message长度超128,则写入content
+        if (mb_strlen($record['message']) > 128){
+            $record['context']['logMessage'] = $record['message'];
+            $record['message'] = mb_substr($record['message'], 0, 128);
+        }
+
+        // 处理多维数组
+        foreach ($record['context'] as $key => $value){
+            if (is_array($value)){
+                $value = json_encode($value, JSON_UNESCAPED_UNICODE);
+            }
+            $record['context'][$key] = $value;
+        }
+        return $record;
     }
 }
