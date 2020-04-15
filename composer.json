@@ -14,7 +14,7 @@
         "ext-mbstring": "*",
         "ext-json": "*",
         "cblink/aliyun-log-php-sdk": "^1.0",
-        "monolog/monolog": "^2.0",
+        "monolog/monolog": "^1.12|^2.0",
         "phpunit/phpunit": "~7.0|~8.0|~9.0"
     },
     "autoload": {
