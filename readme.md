@@ -7,10 +7,9 @@
 
 - 阿里云log
 
-
 #### 在laravel框架中使用
-
-1. 修改项目中 `app/logging.php`文件，`channels`中添加`aliyun driver`，示例如下
+1. laravel 版本号大于 5.7+
+2. 修改项目中 `app/logging.php`文件，`channels`中添加`aliyun driver`，示例如下
 ```php
 // 将
 return [

@@ -81,9 +81,16 @@ class AliyunLogHandler extends AbstractProcessingHandler
 
         // 处理多维数组
         foreach ($record['context'] as $key => $value){
+            // 如果结果是数组，需要转换为json
             if (is_array($value)){
                 $value = json_encode($value, JSON_UNESCAPED_UNICODE);
             }
+
+            // 如果类型为null，需要转换为字符，否则官方包校验不通过
+            if (is_null($value)){
+                $value = "NULL";
+            }
+
             $record['context'][$key] = $value;
         }
         return $record;
