@@ -14,13 +14,11 @@ class AliyunHandlerTest extends TestCase
         // 节点
         $endpoint = "cn-shenzhen";
         // 项目名称
-        $projectName = "cblink-test";
+        $projectName = "";
         // 日志名称
-        $logName = "handler-test";
+        $logName = "";
 
-        $logger = new Logger('test',
-            [new AliyunLogHandler($accessId, $accessKey, $endpoint, $projectName, $logName)],
-        );
+        $logger = new Logger('test', [new AliyunLogHandler($accessId, $accessKey, $endpoint, $projectName, $logName)]);
 
         $data = [
             'request' => [

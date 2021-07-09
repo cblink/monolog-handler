@@ -3,6 +3,7 @@ namespace Cblink\Monolog\Handler;
 
 use Cblink\AliyunLog\AliyunLogClient;
 use Cblink\AliyunLog\AliyunLogException;
+use Cblink\AliyunLog\LogItem;
 use Cblink\AliyunLog\Request\PutLogsRequest;
 use Monolog\Handler\AbstractProcessingHandler;
 use Monolog\Logger;
@@ -52,7 +53,7 @@ class AliyunLogHandler extends AbstractProcessingHandler
     {
         $record = $this->getRecord($record);
 
-        $logItem = new \Aliyun_Log_Models_LogItem();
+        $logItem = new LogItem();
         $logItem->setTime(time());
         $logItem->setContents($record['context']);
 
