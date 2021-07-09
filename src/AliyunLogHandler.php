@@ -1,7 +1,9 @@
 <?php
 namespace Cblink\Monolog\Handler;
 
-use Closure;
+use Cblink\AliyunLog\AliyunLogClient;
+use Cblink\AliyunLog\AliyunLogException;
+use Cblink\AliyunLog\Request\PutLogsRequest;
 use Monolog\Handler\AbstractProcessingHandler;
 use Monolog\Logger;
 
@@ -12,7 +14,7 @@ use Monolog\Logger;
 class AliyunLogHandler extends AbstractProcessingHandler
 {
     /**
-     * @var \Aliyun_Log_Client
+     * @var AliyunLogClient
      */
     protected $client;
 
@@ -36,7 +38,7 @@ class AliyunLogHandler extends AbstractProcessingHandler
         bool $bubble = true
     )
     {
-        $this->client = new \Aliyun_Log_Client($endpoint.'.log.aliyuncs.com', $access_id, $access_key);
+        $this->client = new AliyunLogClient($endpoint.'.log.aliyuncs.com', $access_id, $access_key);
         $this->projectName = $projectName;
         $this->logName = $logName;
         parent::__construct($level, $bubble);
@@ -44,7 +46,7 @@ class AliyunLogHandler extends AbstractProcessingHandler
 
     /**
      * @param array $record
-     * @throws \Aliyun_Log_Exception
+     * @throws AliyunLogException
      */
     public function write(array $record): void
     {
@@ -54,7 +56,7 @@ class AliyunLogHandler extends AbstractProcessingHandler
         $logItem->setTime(time());
         $logItem->setContents($record['context']);
 
-        $this->client->putLogs(new \Aliyun_Log_Models_PutLogsRequest(
+        $this->client->putLogs(new PutLogsRequest(
             $this->projectName,
             $this->logName,
             $record['message'],
